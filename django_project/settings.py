@@ -13,6 +13,11 @@ CHPASSWD_DOMAIN="example.com"
 # the ldap server to use
 CHPASSWD_SERVER="ad.example.com"
 
+# the number of attempt per time
+CHPASSWD_RATE_LIMIT_ATTEMPTS = 5
+CHPASSWD_RATE_LIMIT_TIME = 60*5
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

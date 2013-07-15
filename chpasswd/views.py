@@ -23,6 +23,8 @@ from django_project.settings import (
     CHPASSWD_SERVER,
     CHPASSWD_DOMAIN,
     CHPASSWD_MIN_PASSWORD_SIZE,
+    CHPASSWD_RATE_LIMIT_TIME,
+    CHPASSWD_RATE_LIMIT_ATTEMPTS,
 )
 
 
@@ -46,11 +48,20 @@ def chpasswd_change(request):
             if not domain:
                 user = "%s@%s" % (user, CHPASSWD_DOMAIN)
 
+            now = datetime.datetime.now()
+            start = now - datetime.timedelta(seconds=CHPASSWD_RATE_LIMIT_TIME)
+            attempts = PasswordChangeLog.objects.filter(
+                ad_user__username=user,
+                when__range=[start, now],
+                success=False)
+            if len(attempts) >= CHPASSWD_RATE_LIMIT_ATTEMPTS:
+                return HttpResponse("Too many wrong attempts, try again later")
+
             (ad_user, created) = ADUser.objects.get_or_create(username=user)
             log = PasswordChangeLog.objects.create(
                 ad_user=ad_user,
                 source_ip = request.META["REMOTE_ADDR"],
-                when = datetime.datetime.now())
+                when = now)
             log.save()
 
             # now do the actual change

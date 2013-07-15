@@ -1,9 +1,18 @@
+import datetime
 import unittest
+
+import ldap
+
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from chpasswd.models import (
+    ADUser,
     PasswordChangeLog,
+)
+
+from django_project.settings import (
+    CHPASSWD_RATE_LIMIT_ATTEMPTS,
 )
 
 from mock import (
@@ -56,6 +65,44 @@ class ChpasswdTestCase(TestCase):
             ad_user__username="user0@example.com")
         self.assertEqual(len(log_entries), 1)
         self.assertEqual(log_entries[0].ad_user.username, "user0@example.com")
+
+    @patch("chpasswd.views.chpasswd_ad")
+    def test_chpasswd_rate_limit(self, mock_chpasswd):
+        data = {"user": "user0",
+                "old_pass": "wrong-pass",
+                "new_pass1": "new_pass123",
+                "new_pass2": "new_pass123",
+                }
+        # simulate wrong login
+        mock_chpasswd.side_effect = ldap.LDAPError("wrong password")
+        for i in range(CHPASSWD_RATE_LIMIT_ATTEMPTS):
+            resp = self.client.post(reverse("chpasswd:chpasswd_change"),
+                                    data=data)
+            self.assertEqual(resp.content, "Failed to change password")
+        # now we should see rate limit
+        resp = self.client.post(reverse("chpasswd:chpasswd_change"),
+                                data=data)
+        self.assertEqual(
+            resp.content, "Too many wrong attempts, try again later")
+
+    @patch("chpasswd.views.chpasswd_ad")
+    def test_chpasswd_rate_limit_allows_change_after_time(self, mock_chpasswd):
+        data = {"user": "user0",
+                "old_pass": "wrong-pass",
+                "new_pass1": "new_pass123",
+                "new_pass2": "new_pass123",
+                }
+        when = datetime.datetime.now() - datetime.timedelta(days=10)
+        for i in range(CHPASSWD_RATE_LIMIT_ATTEMPTS + 10):
+            ad_user = ADUser.objects.create(username="user0")
+            PasswordChangeLog.objects.create(ad_user=ad_user,
+                                             when=when,
+                                             success=False)
+        # now we should see rate limit
+        resp = self.client.post(reverse("chpasswd:chpasswd_change"),
+                                data=data)
+        self.assertEqual(
+            resp.content, "Password changed")
 
 
 if __name__ == '__main__':
