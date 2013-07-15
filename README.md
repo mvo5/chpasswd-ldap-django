@@ -39,4 +39,6 @@ To run the tests:
 $ PYTHONPATH=. python manage.py test chpasswd
 ```
 
-
+Todo:
+-----
+Send mail when the AD password got changed successfully.

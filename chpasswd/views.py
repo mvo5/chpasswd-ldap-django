@@ -8,6 +8,7 @@ from django.shortcuts import (
 from django.template import RequestContext
 from django.http import (
     HttpResponse,
+    HttpResponseBadRequest,
 )
 
 import ldap
@@ -78,6 +79,7 @@ def chpasswd_change(request):
                 return HttpResponse("Failed to change password")
             log.success = True
             log.save()
-    return HttpResponse("Password changed")
-    
+            
+            return HttpResponse("Password changed")
+    return HttpResponseBadRequest("Need POST")
 
