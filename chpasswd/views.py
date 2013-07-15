@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import datetime
+
 from django.shortcuts import (
     render_to_response,
 )
@@ -11,6 +13,11 @@ import ldap
 
 from chpasswd import chpasswd_ad
 from forms import ChpasswdForm
+
+from models import (
+    ADUser,
+    PasswordChangeLog,
+)
 
 from django_project.settings import (
     CHPASSWD_SERVER,
@@ -39,14 +46,26 @@ def chpasswd_change(request):
             if not domain:
                 user = "%s@%s" % (user, CHPASSWD_DOMAIN)
 
+            (ad_user, created) = ADUser.objects.get_or_create(username=user)
+            log = PasswordChangeLog.objects.create(
+                ad_user=ad_user,
+                source_ip = request.META["REMOTE_ADDR"],
+                when = datetime.datetime.now())
+            log.save()
+
             # now do the actual change
             try:
                 chpasswd_ad(CHPASSWD_SERVER, 
                             user,
                             form.cleaned_data["old_pass"], 
                             form.cleaned_data["new_pass1"])
-            except ldap.LDAPError:
+            except ldap.LDAPError as e:
+                log.success = False
+                log.fail_reason = e
+                log.save()
                 return HttpResponse("Failed to change password")
+            log.success = True
+            log.save()
     return HttpResponse("Password changed")
     
 
