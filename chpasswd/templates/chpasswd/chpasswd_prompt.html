@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block body %}
+
+<form action="{% url 'chpasswd:chpasswd_change' %}" 
+      method="post" 
+      class="form-horizontal">
+  <fieldset>
+    <legend>Change Password</legend>
+
+    <div class="control-group">
+      <label class="control-label" for="user">Username</label>
+      <div class="controls">
+        <input id="user" name="user" type="text" placeholder="Username" class="input-large" required="">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="old_pass">Current Password</label>
+      <div class="controls">
+        <input id="old_pass" name="old_pass" type="password" placeholder="Current Password" class="input-large" required="">
+        <span class="help-inline">Test</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="new_pass1">New Password</label>
+      <div class="controls">
+        <input id="new_pass1" name="new_pass1" type="password" placeholder="New Password" class="input-large"
+          required="" minlength="8" data-validation-callback-callback="pw_must_not_contain_username">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls" id="pwstrength">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="new_pass2">New Password (repeat)</label>
+      <div class="controls">
+        <input id="new_pass2" name="new_pass2" type="password" placeholder="New Password (repeat)" class="input-large" required=""
+          data-validation-matches-match="new_pass1" data-validation-matches-message="Must match password entered above" >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary pull-right">Change Password</button>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}pwstrength.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jqBootstrapValidation-1.3.7.min.js"></script>
+<script type="text/javascript">
+  function pw_must_not_contain_username($el, value, callback) {
+    username = $('#user').val();
+    callback({
+      value: value,
+      valid: !(value.indexOf(username) !== -1) || username == '',
+      message: "Password must not contain username!"
+    });
+  }
+  $(document).ready(function () {
+      var options = {
+          usernameField: '#user',
+          viewports: {
+            verdict: '#pwstrength',
+            progress: '#pwstrength',
+          },
+          onLoad: function() {
+            $('#pwstrength .progress').addClass('input-large');
+            $('#pwstrength .password-verdict').addClass('help-inline');
+          }
+      };
+      $('#new_pass1').pwstrength(options);
+
+      $('input,select,textarea').not('[type=submit]').jqBootstrapValidation();
+  });
+</script>
+{% endblock %}
