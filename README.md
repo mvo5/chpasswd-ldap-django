@@ -9,7 +9,7 @@ To install:
 
 Install dependencies:
 ```
-$ sudo apt-get install python-django
+$ sudo apt-get install python-django python-pydns
 ```
 
 Install web-dependencies:
@@ -39,10 +39,4 @@ To run the tests:
 $ PYTHONPATH=. python manage.py test chpasswd
 ```
 
-To do:
-------
-- logging
-- rate-limit login attempts
-- make the html pretty *cough*
-- implement javascript for PW security indicator
-- implement auto-discovery via _ldap._tcp.$DOMAIN SRV records
+

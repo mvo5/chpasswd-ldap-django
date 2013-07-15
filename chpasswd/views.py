@@ -20,7 +20,6 @@ from models import (
 )
 
 from django_project.settings import (
-    CHPASSWD_SERVER,
     CHPASSWD_DOMAIN,
     CHPASSWD_MIN_PASSWORD_SIZE,
     CHPASSWD_RATE_LIMIT_TIME,
@@ -66,7 +65,7 @@ def chpasswd_change(request):
 
             # now do the actual change
             try:
-                chpasswd_ad(CHPASSWD_SERVER, 
+                chpasswd_ad(CHPASSWD_DOMAIN, 
                             user,
                             form.cleaned_data["old_pass"], 
                             form.cleaned_data["new_pass1"])

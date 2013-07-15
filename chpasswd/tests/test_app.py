@@ -58,7 +58,7 @@ class ChpasswdTestCase(TestCase):
                                           })
             self.assertEqual(resp.content, "Password changed")
             mock_chpasswd.assert_called_with(
-                "ad.example.com", "user%s@example.com" % i,
+                "example.com", "user%s@example.com" % i,
                 "oldpass", "new_pass123")
         self.assertEqual(len(PasswordChangeLog.objects.all()), 2)
         log_entries = PasswordChangeLog.objects.filter(
