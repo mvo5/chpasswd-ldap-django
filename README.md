@@ -9,7 +9,7 @@ To install:
 
 Install dependencies:
 ```
-$ sudo apt-get install python-django python-pydns
+$ sudo apt-get install python-django python-dnspython
 ```
 
 Install web-dependencies:
