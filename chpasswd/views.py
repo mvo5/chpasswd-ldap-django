@@ -72,9 +72,9 @@ def chpasswd_change(request):
                             user,
                             form.cleaned_data["old_pass"], 
                             form.cleaned_data["new_pass1"])
-            except ldap.LDAPError as e:
+            except Exception as e:
                 log.success = False
-                log.fail_reason = e
+                log.fail_reason = "%s: %s" % (type(e), str(e))
                 log.save()
                 return HttpResponse("Failed to change password")
             log.success = True
