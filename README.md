@@ -41,4 +41,8 @@ $ PYTHONPATH=. python manage.py test chpasswd
 
 Todo:
 -----
-Send mail when the AD password got changed successfully.
+* Send mail when the AD password got changed successfully.
+* add travis
+* add coveralls
+* add pyflaks test
+* add pep8 test
