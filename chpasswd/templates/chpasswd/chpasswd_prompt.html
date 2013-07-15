@@ -5,6 +5,7 @@
 <form action="{% url 'chpasswd:chpasswd_change' %}" 
       method="post" 
       class="form-horizontal">
+  {% csrf_token %}
   <fieldset>
     <legend>Change Password</legend>
 

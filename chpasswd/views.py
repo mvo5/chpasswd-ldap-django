@@ -5,6 +5,7 @@ import datetime
 from django.shortcuts import (
     render_to_response,
 )
+from django.template import RequestContext
 from django.http import (
     HttpResponse,
 )
@@ -28,7 +29,8 @@ from django_project.settings import (
 
 
 def chpasswd_prompt(request):
-    return render_to_response("chpasswd/chpasswd_prompt.html")
+    return render_to_response("chpasswd/chpasswd_prompt.html",
+                              context_instance=RequestContext(request))
 
 
 def chpasswd_change(request):
