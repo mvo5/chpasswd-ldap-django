@@ -1,6 +1,10 @@
 Simple django based AD password changer
 ======================================
 
+[![Build Status](https://travis-ci.org/mvo5/chpasswd-ldap-django.png)](https://travis-ci.org/mvo5/chpasswd-ldap-django)
+[![Coverage Status](https://coveralls.io/repos/mvo5/chpasswd-ldap-django/badge.png?branch=master)](https://coveralls.io/r/mvo5/chpasswd-ldap-django)
+
+
 Change ldaps/AD password via a webform for those without
 direct access to the ldap service.
 
