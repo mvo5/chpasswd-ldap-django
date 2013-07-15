@@ -26,6 +26,11 @@ Adjust config.py:
 $ vi django_project/setting.py
 ```
 
+Run first time init:
+```
+$ python django_project/first_time_init.py
+```
+
 Configure apache to use "django_project/wsgi.py" in a https context, the
 service will not run on plain http because of the security
 implications it has.
