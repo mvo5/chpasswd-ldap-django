@@ -18,7 +18,7 @@ $ sudo apt-get install python-django python-dnspython
 
 Install web-dependencies:
 ```
-$ (cd static ; ./get.sh)
+$ (cd chpasswd/static ; ./get.sh)
 ```
 
 Adjust config.py:
@@ -29,6 +29,11 @@ $ vi django_project/setting.py
 Run first time init:
 ```
 $ python django_project/first_time_init.py
+```
+
+Init database:
+```
+$ python manage.py syncdb
 ```
 
 Configure apache to use "django_project/wsgi.py" in a https context, the
