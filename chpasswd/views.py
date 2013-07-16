@@ -11,8 +11,6 @@ from django.http import (
     HttpResponseBadRequest,
 )
 
-import ldap
-
 from chpasswd import chpasswd_ad
 from forms import ChpasswdForm
 
