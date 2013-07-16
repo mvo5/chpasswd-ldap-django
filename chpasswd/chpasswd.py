@@ -25,11 +25,11 @@ def get_ad_server(domain):
         l.append( (target, port) )
         servers[priority] = l
     # shuffle
-    for prio in sorted(servers.keys()):
+    for prio in servers.keys():
         server_list = servers[prio]
         random.shuffle(server_list)
     # and try to pick one that answers
-    for prio in sorted(servers.keys()):
+    for prio in sorted(servers.keys(), reverse=True):
         server_list = servers[prio]
         for server, port in server_list:
             try:
