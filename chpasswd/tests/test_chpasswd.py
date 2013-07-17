@@ -1,6 +1,3 @@
-import unittest
-
-
 from django.test import TestCase
 
 
@@ -29,7 +26,3 @@ class LdapTestCase(TestCase):
         mock_query.return_value = l
         res = get_ad_server("example.com")
         self.assertIn(res, ["srv4.8:69", "srv4.9:69"])
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,5 +1,4 @@
 import datetime
-import unittest
 
 import ldap
 
@@ -104,6 +103,6 @@ class ChpasswdTestCase(TestCase):
         self.assertEqual(
             resp.content, "Password changed")
 
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_chpasswd_change_needs_post(self):
+        resp = self.client.get(reverse("chpasswd:chpasswd_change"))
+        self.assertEqual(resp.status_code, 400)
