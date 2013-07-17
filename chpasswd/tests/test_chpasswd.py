@@ -6,7 +6,10 @@ from mock import (
     patch,
 )
 
-from chpasswd.chpasswd import get_ad_server
+from chpasswd.chpasswd import (
+    chpasswd_ad_lowlevel,
+    get_ad_server,
+    )
 import dns.resolver
 
 
@@ -26,3 +29,16 @@ class LdapTestCase(TestCase):
         mock_query.return_value = l
         res = get_ad_server("example.com")
         self.assertIn(res, ["srv4.8:69", "srv4.9:69"])
+
+    @patch("ldap.initialize")
+    def test_chpasswd_ad_lowlevel(self, mock_initialize):
+        mock_ldap = Mock()
+        mock_ldap.modify_s.return_value = True
+        mock_initialize.return_value = mock_ldap
+
+        res = chpasswd_ad_lowlevel(
+            "ad.example.com", "user", "oldpass", "new_pass")
+
+        mock_ldap.start_tls_s.assert_called()
+        mock_ldap.modify_s.assert_called()
+        self.assertTrue(res)
