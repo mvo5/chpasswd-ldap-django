@@ -16,7 +16,7 @@ class PasswordChangeLog(models.Model):
     when = models.DateTimeField()
     success = models.BooleanField()
     fail_reason = models.TextField()
-    
+
     def __unicode__(self):
         return "PasswordChangeLog: %s %s %s %s" % (
             self.ad_user, self.source_ip, self.when, self.success)

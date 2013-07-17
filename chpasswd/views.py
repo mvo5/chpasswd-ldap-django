@@ -37,10 +37,12 @@ def chpasswd_change(request):
         form = ChpasswdForm(request.POST)
         if form.is_valid():
             # sanity checks
-            if form.cleaned_data["new_pass1"] != form.cleaned_data["new_pass2"]:
+            new_pass1 = form.cleaned_data["new_pass1"]
+            new_pass2 = form.cleaned_data["new_pass2"]
+            if new_pass1 != new_pass2:
                 return HttpResponse("passwords don't match")
 
-            if len(form.cleaned_data["new_pass1"]) < CHPASSWD_MIN_PASSWORD_SIZE:
+            if len(new_pass1) < CHPASSWD_MIN_PASSWORD_SIZE:
                 return HttpResponse("password too short")
 
             # auto add domain if not given
@@ -60,15 +62,15 @@ def chpasswd_change(request):
             (ad_user, created) = ADUser.objects.get_or_create(username=user)
             log = PasswordChangeLog.objects.create(
                 ad_user=ad_user,
-                source_ip = request.META["REMOTE_ADDR"],
-                when = now)
+                source_ip=request.META["REMOTE_ADDR"],
+                when=now)
             log.save()
 
             # now do the actual change
             try:
-                chpasswd_ad(CHPASSWD_DOMAIN, 
+                chpasswd_ad(CHPASSWD_DOMAIN,
                             user,
-                            form.cleaned_data["old_pass"], 
+                            form.cleaned_data["old_pass"],
                             form.cleaned_data["new_pass1"])
             except Exception as e:
                 log.success = False
@@ -77,7 +79,6 @@ def chpasswd_change(request):
                 return HttpResponse("Failed to change password")
             log.success = True
             log.save()
-            
+
             return HttpResponse("Password changed")
     return HttpResponseBadRequest("Need POST")
-

@@ -46,7 +46,7 @@ class ChpasswdTestCase(TestCase):
                                       "new_pass2": "1234",
                                       })
         self.assertEqual(resp.content, "password too short")
-        
+
     @patch("chpasswd.views.chpasswd_ad")
     def test_chpasswd_change(self, mock_chpasswd):
         for i in range(2):

@@ -4,6 +4,7 @@ from models import (
     PasswordChangeLog,
 )
 
+
 class ADUserAdmin(admin.ModelAdmin):
     search_fields = ('username',)
     list_display = ('username',)
@@ -15,9 +16,9 @@ class PasswordChangeLogAdmin(admin.ModelAdmin):
     list_display = ('ad_user', 'source_ip', 'when', 'success')
     list_filter = ('success', )
     ordering = ('when', )
-    readonly_fields = ('ad_user', 'source_ip', 'when', 'success', 'fail_reason')
+    readonly_fields = (
+        'ad_user', 'source_ip', 'when', 'success', 'fail_reason')
 
 
 admin.site.register(ADUser, ADUserAdmin)
 admin.site.register(PasswordChangeLog, PasswordChangeLogAdmin)
-

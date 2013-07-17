@@ -22,7 +22,7 @@ def get_ad_server(domain):
         l = servers.get(priority, [])
         target = srv.target.to_text().strip(".")
         port = srv.port
-        l.append( (target, port) )
+        l.append((target, port))
         servers[priority] = l
     # shuffle
     for prio in servers.keys():
@@ -33,7 +33,7 @@ def get_ad_server(domain):
         server_list = servers[prio]
         for server, port in server_list:
             try:
-                conn = socket.create_connection( (server, port), timeout=1.0)
+                conn = socket.create_connection((server, port), timeout=1.0)
                 conn.close()
                 return "%s:%s" % (server, port)
             except socket.error:
@@ -60,7 +60,7 @@ def chpasswd_ad_lowlevel(server, user, old_pass, new_pass):
     ldif = [
         (ldap.MOD_DELETE, 'unicodePwd', [encoded_old]),
         (ldap.MOD_ADD, 'unicodePwd', [encoded_new])]
-    dn="CN=%s,cn=Users,dc=uni-trier,dc=de" % user.split("@")[0]
+    dn = "CN=%s,cn=Users,dc=uni-trier,dc=de" % user.split("@")[0]
     res = l.modify_s(dn, ldif)
     return res
 
@@ -79,4 +79,3 @@ if __name__ == "__main__":
     # error
     if not res:
         sys.exit(1)
-
