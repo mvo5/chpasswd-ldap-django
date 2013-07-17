@@ -49,14 +49,24 @@ $ CHPASSWD_AD_DEBUG=1 python manage.py runserver
 
 To run the tests:
 -----------------
+
+The normal python/django unittest framework is used.
 ```
 $ PYTHONPATH=. python manage.py test chpasswd
 ```
 
+Get Coverage report:
+--------------------
+
+There is a .coveragerc so running python-coverage will work out of the box.
+```
+$ python-coverage run manage.py test chpasswd
+$ python-coverage report
+$ python-coverage html
+$ firefox htmlcov/index.html
+```
+
 Todo:
 -----
-* Send mail when the AD password got changed successfully.
-* add travis
-* add coveralls
-* add pyflaks test
-* add pep8 test
+* Send mail to alternative email address when the AD password got
+  changed successfully
