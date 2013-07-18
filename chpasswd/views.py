@@ -7,7 +7,6 @@ from django.shortcuts import (
 )
 from django.template import RequestContext
 from django.http import (
-    HttpResponse,
     HttpResponseBadRequest,
 )
 
@@ -30,13 +29,16 @@ from django_project.settings import (
 def chpasswd_prompt(request):
     return render_without_msg(request)
 
+
 def render_without_msg(request):
     return render_with_msg(request)
 
-def render_with_msg(request, msg = None, success = None):
+
+def render_with_msg(request, msg=None, success=None):
     return render_to_response("chpasswd/chpasswd_prompt.html",
-                              dictionary={"msg" : msg, "success" : success},
+                              dictionary={"msg": msg, "success": success},
                               context_instance=RequestContext(request))
+
 
 def chpasswd_change(request):
     if request.method == "POST":
@@ -46,7 +48,7 @@ def chpasswd_change(request):
             new_pass1 = form.cleaned_data["new_pass1"]
             new_pass2 = form.cleaned_data["new_pass2"]
             if new_pass1 != new_pass2:
-                return render_with_msg(request, 
+                return render_with_msg(request,
                                         msg="passwords don't match",
                                         success=False)
 
@@ -68,8 +70,8 @@ def chpasswd_change(request):
                 success=False)
             if len(attempts) >= CHPASSWD_RATE_LIMIT_ATTEMPTS:
                 return render_with_msg(request,
-                                        msg="Too many wrong attempts, try again later",
-                                        success=False)
+                            msg="Too many wrong attempts, try again later",
+                            success=False)
 
             (ad_user, created) = ADUser.objects.get_or_create(username=user)
             log = PasswordChangeLog.objects.create(
