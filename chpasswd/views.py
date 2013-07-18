@@ -7,7 +7,6 @@ from django.shortcuts import (
 )
 from django.template import RequestContext
 from django.http import (
-    HttpResponse,
     HttpResponseBadRequest,
 )
 
@@ -28,7 +27,16 @@ from django_project.settings import (
 
 
 def chpasswd_prompt(request):
+    return render_without_msg(request)
+
+
+def render_without_msg(request):
+    return render_with_msg(request)
+
+
+def render_with_msg(request, msg=None, success=None):
     return render_to_response("chpasswd/chpasswd_prompt.html",
+                              dictionary={"msg": msg, "success": success},
                               context_instance=RequestContext(request))
 
 
@@ -40,10 +48,14 @@ def chpasswd_change(request):
             new_pass1 = form.cleaned_data["new_pass1"]
             new_pass2 = form.cleaned_data["new_pass2"]
             if new_pass1 != new_pass2:
-                return HttpResponse("passwords don't match")
+                return render_with_msg(request,
+                                        msg="passwords don't match",
+                                        success=False)
 
             if len(new_pass1) < CHPASSWD_MIN_PASSWORD_SIZE:
-                return HttpResponse("password too short")
+                return render_with_msg(request,
+                                        msg="password too short",
+                                        success=False)
 
             # auto add domain if not given
             (user, sep, domain) = form.cleaned_data["user"].partition("@")
@@ -57,7 +69,9 @@ def chpasswd_change(request):
                 when__range=[start, now],
                 success=False)
             if len(attempts) >= CHPASSWD_RATE_LIMIT_ATTEMPTS:
-                return HttpResponse("Too many wrong attempts, try again later")
+                return render_with_msg(request,
+                            msg="Too many wrong attempts, try again later",
+                            success=False)
 
             (ad_user, created) = ADUser.objects.get_or_create(username=user)
             log = PasswordChangeLog.objects.create(
@@ -76,9 +90,13 @@ def chpasswd_change(request):
                 log.success = False
                 log.fail_reason = "%s: %s" % (type(e), str(e))
                 log.save()
-                return HttpResponse("Failed to change password")
+                return render_with_msg(request,
+                                        msg="Failed to change password",
+                                        success=False)
             log.success = True
             log.save()
 
-            return HttpResponse("Password changed")
+            return render_with_msg(request,
+                                    msg="Password changed",
+                                    success=True)
     return HttpResponseBadRequest("Need POST")
