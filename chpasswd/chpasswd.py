@@ -54,7 +54,9 @@ def chpasswd_ad_lowlevel(server, user, old_pass, new_pass):
     l = ldap.initialize("ldap://%s" % server)
     l.set_option(ldap.OPT_REFERRALS, 0)
     l.start_tls_s()
-    res = l.simple_bind_s(user, old_pass)
+    # FIXME: actually test/check if that is what ldap is expecting as
+    #        the encoding
+    res = l.simple_bind_s(user, old_pass.encode("utf-8"))
     encoded_old = ('"%s"' % old_pass).encode("utf-16-le")
     encoded_new = ('"%s"' % new_pass).encode("utf-16-le")
     ldif = [
