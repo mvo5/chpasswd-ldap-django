@@ -9,6 +9,12 @@
   <fieldset>
     <legend>Change Password</legend>
 
+    {% if msg != None %}
+      <div class="alert alert-{{ success|yesno:"success,error,info" }}">
+        {{ msg }}
+      </div>
+    {% endif %}
+
     <div class="control-group">
       <label class="control-label" for="user">Username</label>
       <div class="controls">
