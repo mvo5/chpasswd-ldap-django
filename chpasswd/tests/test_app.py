@@ -34,7 +34,7 @@ class ChpasswdTestCase(TestCase):
                                      "new_pass1": "new_pass1",
                                      "new_pass2": "new_pass2",
                                      })
-        self.assertEqual(resp.content, "passwords don't match")
+        self.assertTrue("passwords don&#39;t match" in resp.content)
 
     def test_chpasswd_change_too_short(self):
         chpasswd.CHPASSWD_MIN_PASSWORD_SIZE = 8
@@ -44,7 +44,7 @@ class ChpasswdTestCase(TestCase):
                                       "new_pass1": "1234",
                                       "new_pass2": "1234",
                                       })
-        self.assertEqual(resp.content, "password too short")
+        self.assertTrue("password too short" in resp.content)
 
     @patch("chpasswd.views.chpasswd_ad")
     def test_chpasswd_change(self, mock_chpasswd):
@@ -55,7 +55,7 @@ class ChpasswdTestCase(TestCase):
                                           "new_pass1": "new_pass123",
                                           "new_pass2": "new_pass123",
                                           })
-            self.assertEqual(resp.content, "Password changed")
+            self.assertTrue("Password changed" in resp.content)
             mock_chpasswd.assert_called_with(
                 "example.com", "user%s@example.com" % i,
                 "oldpass", "new_pass123")
@@ -77,12 +77,12 @@ class ChpasswdTestCase(TestCase):
         for i in range(CHPASSWD_RATE_LIMIT_ATTEMPTS):
             resp = self.client.post(reverse("chpasswd:chpasswd_change"),
                                     data=data)
-            self.assertEqual(resp.content, "Failed to change password")
+            self.assertTrue("Failed to change password" in resp.content)
         # now we should see rate limit
         resp = self.client.post(reverse("chpasswd:chpasswd_change"),
                                 data=data)
-        self.assertEqual(
-            resp.content, "Too many wrong attempts, try again later")
+        self.assertTrue(
+            "Too many wrong attempts, try again later" in resp.content)
 
     @patch("chpasswd.views.chpasswd_ad")
     def test_chpasswd_rate_limit_allows_change_after_time(self, mock_chpasswd):
@@ -100,8 +100,8 @@ class ChpasswdTestCase(TestCase):
         # now we should see rate limit
         resp = self.client.post(reverse("chpasswd:chpasswd_change"),
                                 data=data)
-        self.assertEqual(
-            resp.content, "Password changed")
+        self.assertTrue(
+            "Password changed" in resp.content)
 
     def test_chpasswd_change_needs_post(self):
         resp = self.client.get(reverse("chpasswd:chpasswd_change"))
