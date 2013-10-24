@@ -59,8 +59,8 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}pwstrength.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}jqBootstrapValidation-1.3.7.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/components/pwstrength.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}/components/jqBootstrapValidation-1.3.7.min.js"></script>
 <script type="text/javascript">
   function pw_must_not_contain_username($el, value, callback) {
     username = $('#user').val();

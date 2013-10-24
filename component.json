@@ -1,0 +1,12 @@
+{
+  "name": "fwadmin",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "bootstrap.css": "https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css",
+    "bootstrap.min": "https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js",
+    "pwstrength.js": "https://raw.github.com/ablanco/jquery.pwstrength.bootstrap/master/src/pwstrength.js",
+      "jqBootstrapValidation-1.3.7.min.js": "https://raw.github.com/ReactiveRaven/jqBootstrapValidation/master/dist/jqBootstrapValidation-1.3.7.min.js"
+  },
+  "devDependencies": {}
+}
