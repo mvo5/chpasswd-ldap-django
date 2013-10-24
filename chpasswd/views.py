@@ -19,12 +19,7 @@ from models import (
     PasswordChangeLog,
 )
 
-from django_project.settings import (
-    CHPASSWD_DOMAIN,
-    CHPASSWD_MIN_PASSWORD_SIZE,
-    CHPASSWD_RATE_LIMIT_TIME,
-    CHPASSWD_RATE_LIMIT_ATTEMPTS,
-)
+from django.conf import settings
 
 
 def chpasswd_prompt(request):
@@ -53,7 +48,7 @@ def chpasswd_change(request):
                                         msg="passwords don't match",
                                         success=False)
 
-            if len(new_pass1) < CHPASSWD_MIN_PASSWORD_SIZE:
+            if len(new_pass1) < settings.CHPASSWD_MIN_PASSWORD_SIZE:
                 return render_with_msg(request,
                                         msg="password too short",
                                         success=False)
@@ -61,15 +56,16 @@ def chpasswd_change(request):
             # auto add domain if not given
             (user, sep, domain) = form.cleaned_data["user"].partition("@")
             if not domain:
-                user = "%s@%s" % (user, CHPASSWD_DOMAIN)
+                user = "%s@%s" % (user, settings.CHPASSWD_DOMAIN)
 
             now = datetime.datetime.now()
-            start = now - datetime.timedelta(seconds=CHPASSWD_RATE_LIMIT_TIME)
+            start = now - datetime.timedelta(
+                seconds=settings.CHPASSWD_RATE_LIMIT_TIME)
             attempts = PasswordChangeLog.objects.filter(
                 ad_user__username=user,
                 when__range=[start, now],
                 success=False)
-            if len(attempts) >= CHPASSWD_RATE_LIMIT_ATTEMPTS:
+            if len(attempts) >= settings.CHPASSWD_RATE_LIMIT_ATTEMPTS:
                 return render_with_msg(request,
                             msg="Too many wrong attempts, try again later",
                             success=False)
@@ -83,7 +79,7 @@ def chpasswd_change(request):
 
             # now do the actual change
             try:
-                chpasswd_ad(CHPASSWD_DOMAIN,
+                chpasswd_ad(settings.CHPASSWD_DOMAIN,
                             user,
                             form.cleaned_data["old_pass"],
                             form.cleaned_data["new_pass1"])
