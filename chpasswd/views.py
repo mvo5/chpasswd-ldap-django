@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.http import (
     HttpResponseBadRequest,
 )
+from django.utils.translation import ugettext as _
 
 from chpasswd import chpasswd_ad
 from forms import ChpasswdForm
@@ -91,12 +92,12 @@ def chpasswd_change(request):
                 log.fail_reason = "%s: %s" % (type(e), str(e))
                 log.save()
                 return render_with_msg(request,
-                                        msg="Failed to change password",
+                                        msg=_("Failed to change password"),
                                         success=False)
             log.success = True
             log.save()
 
             return render_with_msg(request,
-                                    msg="Password changed",
+                                    msg=_("Password changed"),
                                     success=True)
     return HttpResponseBadRequest("Need POST")
