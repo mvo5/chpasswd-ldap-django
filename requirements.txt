@@ -1,4 +1,6 @@
 django
+python-ldap
+dnspython
 mock
 pep8
 pyflakes
