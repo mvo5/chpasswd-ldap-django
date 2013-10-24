@@ -3,6 +3,7 @@ from settings import *
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+CHPASSWD_DOMAIN="uni-trier.de"
 
 DATABASES = {
     'default': {
