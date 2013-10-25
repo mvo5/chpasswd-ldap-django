@@ -10,9 +10,7 @@ from chpasswd.models import (
     PasswordChangeLog,
 )
 
-from django_project.settings import (
-    CHPASSWD_RATE_LIMIT_ATTEMPTS,
-)
+from django.conf import settings
 
 from mock import (
     patch,
@@ -74,7 +72,7 @@ class ChpasswdTestCase(TestCase):
                 }
         # simulate wrong login
         mock_chpasswd.side_effect = ldap.LDAPError("wrong password")
-        for i in range(CHPASSWD_RATE_LIMIT_ATTEMPTS):
+        for i in range(settings.CHPASSWD_RATE_LIMIT_ATTEMPTS):
             resp = self.client.post(reverse("chpasswd:chpasswd_change"),
                                     data=data)
             self.assertTrue("Failed to change password" in resp.content)
@@ -92,7 +90,7 @@ class ChpasswdTestCase(TestCase):
                 "new_pass2": "new_pass123",
                 }
         when = datetime.datetime.now() - datetime.timedelta(days=10)
-        for i in range(CHPASSWD_RATE_LIMIT_ATTEMPTS + 10):
+        for i in range(settings.CHPASSWD_RATE_LIMIT_ATTEMPTS + 10):
             ad_user = ADUser.objects.create(username="user0")
             PasswordChangeLog.objects.create(ad_user=ad_user,
                                              when=when,
