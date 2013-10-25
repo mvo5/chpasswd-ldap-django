@@ -1,5 +1,6 @@
 django
 python-ldap
+psycopg2
 dnspython
 mock
 pep8
