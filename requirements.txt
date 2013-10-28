@@ -2,6 +2,8 @@ django
 python-ldap
 psycopg2
 dnspython
+# testing
 mock
 pep8
 pyflakes
+coveralls
