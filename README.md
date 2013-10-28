@@ -16,14 +16,15 @@ Install dependencies:
 $ sudo apt-get install python-django python-dnspython
 ```
 
-Install web-dependencies:
+Install web-dependencies via nodejs & "bower"
 ```
-$ (cd chpasswd/static ; ./get.sh)
+$ npm install bower
+$ bower install
 ```
 
 Adjust config.py:
 ```
-$ vi django_project/setting.py
+$ vi django_project/setting_production.py
 ```
 
 Run first time init:
