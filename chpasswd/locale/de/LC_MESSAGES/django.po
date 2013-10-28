@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-24 10:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2013-10-28 08:16+0100\n"
+"PO-Revision-Date: 2013-10-28 08:23+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,10 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: views.py:95
-msgid "Failed to change password"
+#: views.py:48
+msgid "Passwords do not match"
 msgstr ""
 
-#: views.py:101
-msgid "Password changed"
+#: views.py:53
+msgid "Password too short"
 msgstr ""
+
+#: views.py:70
+msgid "Too many wrong attempts, try again later"
+msgstr ""
+
+#: views.py:91
+msgid "Failed to change password"
+msgstr "Das Passwort konnte nicht geändert werden"
+
+#: views.py:97
+msgid "Password changed"
+msgstr "Passwort geändert"
+
+#: templates/base.html:8 templates/base.html.py:28
+msgid "AD Password changer"
+msgstr "Passwort Änderungswerkzeug"
+
+#: templates/chpasswd/chpasswd_prompt.html:11
+#: templates/chpasswd/chpasswd_prompt.html:63
+msgid "Change Password"
+msgstr "Passwort wechseln"
+
+#: templates/chpasswd/chpasswd_prompt.html:20
+msgid "Username"
+msgstr "Benutzername"
+
+#: templates/chpasswd/chpasswd_prompt.html:27
+#: templates/chpasswd/chpasswd_prompt.html:30
+msgid "Current Password"
+msgstr "Akutelles Passwort"
+
+#: templates/chpasswd/chpasswd_prompt.html:37
+#: templates/chpasswd/chpasswd_prompt.html:40
+msgid "New Password"
+msgstr "Neues Passwort"
+
+#: templates/chpasswd/chpasswd_prompt.html:52
+#: templates/chpasswd/chpasswd_prompt.html:55
+msgid "New Password (repeat)"
+msgstr "Neues Password (wiederholen)"
+
+#: templates/chpasswd/chpasswd_prompt.html:58
+msgid "Must match password entered above"
+msgstr "Mit mit dem obigen Passwort übereinstimmen"
+
+#: templates/chpasswd/chpasswd_prompt.html:78
+msgid "Password must not contain username!"
+msgstr "Das Passwort darf nicht den Usernamen enthalten"
