@@ -45,12 +45,12 @@ def chpasswd_change(request):
             new_pass2 = form.cleaned_data["new_pass2"]
             if new_pass1 != new_pass2:
                 return render_with_msg(request,
-                                        msg="passwords don't match",
+                                        msg=_("Passwords do not match"),
                                         success=False)
 
             if len(new_pass1) < settings.CHPASSWD_MIN_PASSWORD_SIZE:
                 return render_with_msg(request,
-                                        msg="password too short",
+                                        msg=_("Password too short"),
                                         success=False)
 
             # auto add domain if not given
@@ -67,7 +67,7 @@ def chpasswd_change(request):
                 success=False)
             if len(attempts) >= settings.CHPASSWD_RATE_LIMIT_ATTEMPTS:
                 return render_with_msg(request,
-                            msg="Too many wrong attempts, try again later",
+                            msg=_("Too many wrong attempts, try again later"),
                             success=False)
 
             (ad_user, created) = ADUser.objects.get_or_create(username=user)
