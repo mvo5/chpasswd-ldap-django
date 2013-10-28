@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-28 08:16+0100\n"
+"POT-Creation-Date: 2013-10-28 10:00+0100\n"
 "PO-Revision-Date: 2013-10-28 08:23+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,19 +20,19 @@ msgstr ""
 
 #: views.py:48
 msgid "Passwords do not match"
-msgstr ""
+msgstr "Die Passwörter stimmen nicht überein."
 
 #: views.py:53
 msgid "Password too short"
-msgstr ""
+msgstr "Passwort zu kurz"
 
 #: views.py:70
 msgid "Too many wrong attempts, try again later"
-msgstr ""
+msgstr "Zu viele Fehlversuche, versuchen Sie es später erneut."
 
 #: views.py:91
 msgid "Failed to change password"
-msgstr "Das Passwort konnte nicht geändert werden"
+msgstr "Das Passwort konnte nicht geändert werden."
 
 #: views.py:97
 msgid "Password changed"
@@ -40,12 +40,12 @@ msgstr "Passwort geändert"
 
 #: templates/base.html:8 templates/base.html.py:28
 msgid "AD Password changer"
-msgstr "Passwort Änderungswerkzeug"
+msgstr "Passwortänderungswerkzeug"
 
 #: templates/chpasswd/chpasswd_prompt.html:11
 #: templates/chpasswd/chpasswd_prompt.html:63
 msgid "Change Password"
-msgstr "Passwort wechseln"
+msgstr "Passwort ändern"
 
 #: templates/chpasswd/chpasswd_prompt.html:20
 msgid "Username"
@@ -54,7 +54,7 @@ msgstr "Benutzername"
 #: templates/chpasswd/chpasswd_prompt.html:27
 #: templates/chpasswd/chpasswd_prompt.html:30
 msgid "Current Password"
-msgstr "Akutelles Passwort"
+msgstr "Aktuelles Passwort"
 
 #: templates/chpasswd/chpasswd_prompt.html:37
 #: templates/chpasswd/chpasswd_prompt.html:40
@@ -64,12 +64,12 @@ msgstr "Neues Passwort"
 #: templates/chpasswd/chpasswd_prompt.html:52
 #: templates/chpasswd/chpasswd_prompt.html:55
 msgid "New Password (repeat)"
-msgstr "Neues Password (wiederholen)"
+msgstr "Neues Passwort (Wiederholung)"
 
 #: templates/chpasswd/chpasswd_prompt.html:58
 msgid "Must match password entered above"
-msgstr "Mit mit dem obigen Passwort übereinstimmen"
+msgstr "Das Passwort muss mit dem zuvor eingegebenen Passwort übereinstimmen."
 
 #: templates/chpasswd/chpasswd_prompt.html:78
 msgid "Password must not contain username!"
-msgstr "Das Passwort darf nicht den Usernamen enthalten"
+msgstr "Das Passwort darf den Benutzernamen nicht enthalten!"
