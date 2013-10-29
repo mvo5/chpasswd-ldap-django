@@ -1,0 +1,11 @@
+# customize
+project_name: chpasswd
+project_git_repo: https://github.com/mvo5/chpasswd-ldap-django.git # use ZIMK later
+project_git_version: master
+project_uses_ldap: False
+project_uses_south: False
+
+# maybe customize
+project_admin_mail: team_shen@uni-trier.de
+project_ssl_cert_chain: unitrier-ca-chain.pem
+project_server_fqdn: ${inventory_hostname}.uni-trier.de

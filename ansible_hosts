@@ -1,0 +1,15 @@
+
+[servers:children]
+production
+staging
+lxc
+
+[lxc]
+chpasswd-lxc
+
+[staging]
+chpasswd-staging
+
+[production]
+chpasswd
+
