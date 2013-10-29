@@ -75,7 +75,7 @@
     callback({
       value: value,
       valid: !(value.indexOf(username) !== -1) || username == '',
-      message: {% trans "Password must not contain username!" %}
+      message: "{% trans "Password must not contain username!" %}"
     });
   }
   $(document).ready(function () {
