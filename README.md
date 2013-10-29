@@ -47,6 +47,16 @@ To test-run locally:
 $ CHPASSWD_AD_DEBUG=1 python manage.py runserver
 ```
 
+To compile the i18n strings:
+----------------------------
+```
+$ (cd chpasswd ; python manage.py compilemessages)
+```
+
+And to update the i18n strings for new translations do:
+```
+$ (cd chpasswd ; python manage.py makemessages -a)
+```
 
 To run the tests:
 -----------------
