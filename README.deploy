@@ -1,0 +1,31 @@
+Deploy the code
+===============
+
+The prefered way to deploy this app is via ansible. There
+is a ansible submodule that contains the deploy instructions
+(tested against ubuntu 12.04).
+
+Edit ansible_hosts to match your config.
+
+Deploy
+------
+
+To deploy on staging and run:
+```
+$ ansible-playbook ansible/deploy.yml --limit staging
+```
+
+
+
+First time provision
+--------------------
+
+A first time install is a bit more work, you will need to
+create a db password for your host. E.g. via:
+```
+$ printf "$(pwgen 14 1)" > ansible/non-git-files/chpasswd-staging.db-password
+```
+(make sure the first part of the name matches your ansible inventory hostname).
+
+Then put the ssl keys under "non-git-files/${project_server_fqdn}" as
+"server.key", "server.crt" and the cert chain file as well.
