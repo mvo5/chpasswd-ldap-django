@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import RedirectView
 
 # enable admin interface
 from django.contrib import admin
@@ -9,7 +10,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'django_project.views.home', name='home'),
     # url(r'^django_project/', include('django_project.foo.urls')),
 
-    # default url for the students bucket
+    url(r'^$', RedirectView.as_view(url='/chpasswd/')),
     url(r'^chpasswd/', 
         include('chpasswd.urls', namespace="chpasswd")),
 
