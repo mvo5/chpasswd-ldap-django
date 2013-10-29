@@ -32,7 +32,7 @@ class ChpasswdTestCase(TestCase):
                                      "new_pass1": "new_pass1",
                                      "new_pass2": "new_pass2",
                                      })
-        self.assertTrue("passwords don&#39;t match" in resp.content)
+        self.assertTrue("Passwords do not match" in resp.content)
 
     def test_chpasswd_change_too_short(self):
         chpasswd.CHPASSWD_MIN_PASSWORD_SIZE = 8
@@ -42,7 +42,7 @@ class ChpasswdTestCase(TestCase):
                                       "new_pass1": "1234",
                                       "new_pass2": "1234",
                                       })
-        self.assertTrue("password too short" in resp.content)
+        self.assertTrue("Password too short" in resp.content)
 
     @patch("chpasswd.views.chpasswd_ad")
     def test_chpasswd_change(self, mock_chpasswd):

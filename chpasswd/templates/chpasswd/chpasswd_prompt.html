@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load url from future %}
+{% load i18n %}
 {% block body %}
 
 <form action="{% url 'chpasswd:chpasswd_change' %}" 
@@ -7,7 +8,7 @@
       class="form-horizontal">
   {% csrf_token %}
   <fieldset>
-    <legend>Change Password</legend>
+    <legend>{% trans "Change Password" %}</legend>
 
     {% if msg != None %}
       <div class="alert alert-{{ success|yesno:"success,error,info" }}">
@@ -16,25 +17,29 @@
     {% endif %}
 
     <div class="control-group">
-      <label class="control-label" for="user">Username</label>
+      <label class="control-label" for="user">{% trans "Username" %}</label>
       <div class="controls">
         <input id="user" name="user" type="text" placeholder="Username" class="input-large" required="">
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="old_pass">Current Password</label>
+      <label class="control-label" for="old_pass">{% trans "Current Password" %}</label>
       <div class="controls">
-        <input id="old_pass" name="old_pass" type="password" placeholder="Current Password" class="input-large" required="">
+        <input id="old_pass" name="old_pass" type="password" 
+               placeholder="{% trans "Current Password" %}"
+               class="input-large" required="">
         <span class="help-inline"></span>
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="new_pass1">New Password</label>
+      <label class="control-label" for="new_pass1">{% trans "New Password" %}</label>
       <div class="controls">
-        <input id="new_pass1" name="new_pass1" type="password" placeholder="New Password" class="input-large"
-          required="" minlength="8" data-validation-callback-callback="pw_must_not_contain_username">
+        <input id="new_pass1" name="new_pass1" type="password" 
+               placeholder="{% trans "New Password" %}"
+               class="input-large" required="" minlength="8" 
+               data-validation-callback-callback="pw_must_not_contain_username">
       </div>
     </div>
 
@@ -44,15 +49,18 @@
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="new_pass2">New Password (repeat)</label>
+      <label class="control-label" for="new_pass2">{% trans "New Password (repeat)" %}</label>
       <div class="controls">
-        <input id="new_pass2" name="new_pass2" type="password" placeholder="New Password (repeat)" class="input-large" required=""
-          data-validation-matches-match="new_pass1" data-validation-matches-message="Must match password entered above" >
+        <input id="new_pass2" name="new_pass2" type="password" 
+               placeholder="{% trans "New Password (repeat)" %}"
+               class="input-large" required=""
+               data-validation-matches-match="new_pass1" 
+               data-validation-matches-message="{% trans "Must match password entered above" %}" >
       </div>
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary pull-right">Change Password</button>
+      <button type="submit" class="btn btn-primary pull-right">{% trans "Change Password" %}</button>
     </div>
   </fieldset>
 </form>
@@ -67,7 +75,7 @@
     callback({
       value: value,
       valid: !(value.indexOf(username) !== -1) || username == '',
-      message: "Password must not contain username!"
+      message: {% trans "Password must not contain username!" %}
     });
   }
   $(document).ready(function () {
