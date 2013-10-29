@@ -23,7 +23,7 @@ First time provision
 A first time install is a bit more work, you will need to
 create a db password for your host. E.g. via:
 ```
-$ printf "$(pwgen 14 1)" > ansible/non-git-files/chpasswd-staging.db-password
+$ printf "$(pwgen 14 1)" > non-git-files/chpasswd-staging.db-password
 ```
 (make sure the first part of the name matches your ansible inventory hostname).
 

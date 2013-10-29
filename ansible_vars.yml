@@ -4,6 +4,7 @@ project_git_repo: https://github.com/mvo5/chpasswd-ldap-django.git # use ZIMK la
 project_git_version: master
 project_uses_ldap: False
 project_uses_south: False
+project_uses_ssl: True
 
 # maybe customize
 project_admin_mail: team_shen@uni-trier.de
