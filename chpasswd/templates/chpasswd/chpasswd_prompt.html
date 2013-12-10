@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load url from future %}
 {% load i18n %}
@@ -38,7 +39,7 @@
       <div class="controls">
         <input id="new_pass1" name="new_pass1" type="password" 
                placeholder="{% trans "New Password" %}"
-               class="input-large" required="" minlength="8" 
+               class="input-large" required="" minlength="8"
                data-validation-callback-callback="pw_must_not_contain_username">
       </div>
     </div>
@@ -67,7 +68,10 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}components/pwstrength.js/index.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/zxcvdn-async.js">
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}components/zxcvdn.js/index.js">
+</script>
 <script type="text/javascript" src="{{ STATIC_URL }}components/jqBootstrapValidation-1.3.7.min.js/index.js"></script>
 <script type="text/javascript">
   function pw_must_not_contain_username($el, value, callback) {
@@ -78,19 +82,31 @@
       message: "{% trans "Password must not contain username!" %}"
     });
   }
+  // FIXME: add function crack_time_display() that does the crack time
+  //        calculation with i18n
   $(document).ready(function () {
-      var options = {
-          usernameField: '#user',
-          viewports: {
-            verdict: '#pwstrength',
-            progress: '#pwstrength',
-          },
-          onLoad: function() {
-            $('#pwstrength .progress').addClass('input-large');
-            $('#pwstrength .password-verdict').addClass('help-inline');
-          }
-      };
-      $('#new_pass1').pwstrength(options);
+      $('#new_pass1').keyup(function() {
+        result = zxcvbn($('#new_pass1').val())
+        //console.log("Entropy: "+result.entropy)
+        //console.log("Crack time: "+result.crack_time_display)
+        switch(result.score) {
+            case 0: 
+              $('#pwstrength').text("{% trans 'Password is very Weak' %}");
+              break;
+            case 1: 
+              $('#pwstrength').text("{% trans 'Password is weak' %}");
+              break;
+            case 2: 
+              $('#pwstrength').text("{% trans 'Password is medium' %}");
+              break;
+            case 3: 
+              $('#pwstrength').text("{% trans 'Password is strong' %}");
+              break;
+            case 4: 
+              $('#pwstrength').text("{% trans 'Password is very strong' %}");
+              break;
+        }
+      });
 
       $('input,select,textarea').not('[type=submit]').jqBootstrapValidation();
   });
