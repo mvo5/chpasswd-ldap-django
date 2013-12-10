@@ -6,8 +6,7 @@
     "bootstrap.css": "https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css",
     "bootstrap.min": "https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js",
       "jqBootstrapValidation-1.3.7.min.js": "https://raw.github.com/ReactiveRaven/jqBootstrapValidation/master/dist/jqBootstrapValidation-1.3.7.min.js",
-      "zxcvdn-async.js": "https://raw.github.com/lowe/zxcvbn/master/zxcvbn-async.js",
-      "zxcvdn.js": "https://raw.github.com/lowe/zxcvbn/master/zxcvbn.js"
+      "zxcvbn": "*"
   },
   "devDependencies": {}
 }
